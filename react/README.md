@@ -28,3 +28,9 @@ this.handleClick = this.handleClick.bind(this);
 ```
 
 これは JavaScript では `true && expression` は必ず expression, `false && expression` は必ず false と評価されることを利用している
+
+### リスト
+
+map() 関数を使ってリストを複数のコンポーネントにレンダリング
+
+リストの要素を`<li>`要素で返すようにして、その配列自体を`<ul>`要素に入れて DOM にレンダーすればリスト出せる
