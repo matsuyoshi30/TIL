@@ -20,6 +20,23 @@
 - 入力データの特性と計算量への影響
 - データの列を保持する配列以外のメモリが必要かどうか
 
-#### 挿入ソート（insertion sort）
+#### 安定したソート
 
-[ALDS1_/1_A](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4061510)
+ソートの安定性（比較対象において同じ要素がソートした結果同じ順番になるか）を検証
+
+バブルソートや挿入ソートは必ず安定するが、選択ソートは安定なソートではない
+
+[ALDS1_2_C](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064626)
+
+##### 挿入ソート（insertion sort）
+
+[ALDS1_1_A](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4061510)
+
+##### バブルソート（bubble sort）
+
+[ALDS1_2_A](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064629)
+
+##### 選択ソート（selection sort）
+
+[ALDS1_2_B](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064630)
+
