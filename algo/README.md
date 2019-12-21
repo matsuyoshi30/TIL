@@ -20,7 +20,7 @@
 - 入力データの特性と計算量への影響
 - データの列を保持する配列以外のメモリが必要かどうか
 
-#### 安定したソート
+### 安定したソート
 
 ソートの安定性（比較対象において同じ要素がソートした結果同じ順番になるか）を検証
 
@@ -28,19 +28,19 @@
 
 [ALDS1_2_C](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064626)
 
-##### 挿入ソート（insertion sort）
+#### 挿入ソート（insertion sort）
 
 [ALDS1_1_A](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4061510)
 
-##### バブルソート（bubble sort）
+#### バブルソート（bubble sort）
 
 [ALDS1_2_A](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064629)
 
-##### 選択ソート（selection sort）
+#### 選択ソート（selection sort）
 
 [ALDS1_2_B](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064630)
 
-#### シェルソート（shell sort）
+### シェルソート（shell sort）
 
 挿入ソートが、それなりに既にソートされている列に対しては皇族に働くという性質を利用したソートアルゴリズム
 
@@ -49,3 +49,27 @@
 [わかりやすいアニメーション](https://www.youtube.com/watch?v=n4sk-SzGvZA)
 
 [ALDS1_2_D](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064888)
+
+## データ構造
+
+### 初等的なデータ構造
+
+#### スタック（stack）
+
+Last In First Out。一時的にデータを退避したいときに有効
+
+- push(x): スタックのトップに要素を追加
+- pop(): スタックのトップから要素を取り出す
+- isEmpty(): スタックが空かどうか判定
+- isFull(): スタックが満杯かどうか判定
+
+[ALDS1_3_A](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064998)
+
+#### キュー（queue）
+
+First In First Out。データを到着順に処理したいときに利用
+
+- enqueue(x): キューの末尾に要素を追加
+- dequeue(): キューの先頭から要素を取り出す
+- isEmpty(): キューが空かどうか判定
+- isFull(): キューが満杯かどうか判定
