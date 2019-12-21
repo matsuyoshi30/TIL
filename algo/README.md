@@ -40,3 +40,12 @@
 
 [ALDS1_2_B](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064630)
 
+#### シェルソート（shell sort）
+
+挿入ソートが、それなりに既にソートされている列に対しては皇族に働くという性質を利用したソートアルゴリズム
+
+ソート対象の列で、指定した間隔で挿入ソートをずらしながら実施する
+
+[わかりやすいアニメーション](https://www.youtube.com/watch?v=n4sk-SzGvZA)
+
+[ALDS1_2_D](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064888)
