@@ -73,3 +73,13 @@ First In First Out。データを到着順に処理したいときに利用
 - dequeue(): キューの先頭から要素を取り出す
 - isEmpty(): キューが空かどうか判定
 - isFull(): キューが満杯かどうか判定
+
+キューの処理は、dequeue() を実行していちいち先頭を消していると、そのたびに O(n) の計算が必要になる
+
+[時間切れ](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4065280)
+
+キューは単なる配列や vector ではなく、リングバッファとして実装することで、上記の問題を解決する
+
+[リングバッファ](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4065294)
+
+スタックやキューは C++ の標準ライブラリにある（std::stack, std::queue）ので、それ使える
