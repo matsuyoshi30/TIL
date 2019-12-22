@@ -12,6 +12,7 @@
   
 [手始め](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4058822)
 
+
 ## ソート
 
 以下の点に留意する
@@ -49,6 +50,7 @@
 [わかりやすいアニメーション](https://www.youtube.com/watch?v=n4sk-SzGvZA)
 
 [ALDS1_2_D](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064888)
+
 
 ## データ構造
 
@@ -101,3 +103,13 @@ struct Node {
 いわゆる「番兵」として空要素を用意しておき、要素の挿入や探索は番兵を利用する
 
 [ALDS1_3_C](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4065578)
+
+
+## 探索
+
+- 線形探索
+  - 番兵使うことで、ループの終了条件だけ気にすれば良くなる（番兵まで行く = ない、なのでキーとの比較が不要）
+- 二分探索
+  - 事前にソートされている必要がある
+  - O(logN) で動作するので線形探索より効率が良い
+- ハッシュ法
