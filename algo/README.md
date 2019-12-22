@@ -84,6 +84,9 @@ First In First Out。データを到着順に処理したいときに利用
 
 スタックやキューは C++ の標準ライブラリにある（std::stack, std::queue）ので、それ使える
 
+[stack](./ds/stack_stl.cpp)
+[queue](./ds/queue_stl.cpp)
+
 #### 連結リスト
 
 各要素が前後の要素へのポインタを保持しているリスト
