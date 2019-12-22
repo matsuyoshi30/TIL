@@ -83,3 +83,18 @@ First In First Out。データを到着順に処理したいときに利用
 [リングバッファ](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4065294)
 
 スタックやキューは C++ の標準ライブラリにある（std::stack, std::queue）ので、それ使える
+
+#### 連結リスト
+
+各要素が前後の要素へのポインタを保持しているリスト
+
+```cpp
+struct Node {
+    int val;
+    Node *prev, *next;
+};
+```
+
+いわゆる「番兵」として空要素を用意しておき、要素の挿入や探索は番兵を利用する
+
+[ALDS1_3_C](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4065578)
