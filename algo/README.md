@@ -113,3 +113,6 @@ struct Node {
   - 事前にソートされている必要がある
   - O(logN) で動作するので線形探索より効率が良い
 - ハッシュ法
+  - ハッシュテーブルと、そのテーブル上のどの位置に挿入するかを要素から算出するハッシュ関数を使用
+  - めっちゃ TLE した。。原因は C++ の string における length() と size() の差？要確認
+  - [ALDS1_4_C](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_4_C/judge/4069162/C++)
