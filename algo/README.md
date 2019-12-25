@@ -112,7 +112,10 @@ struct Node {
 - 二分探索
   - 事前にソートされている必要がある
   - O(logN) で動作するので線形探索より効率が良い
+  - C++ では lower_bound という STL が提供されている
 - ハッシュ法
   - ハッシュテーブルと、そのテーブル上のどの位置に挿入するかを要素から算出するハッシュ関数を使用
   - めっちゃ TLE した。。原因は C++ の string における length() と size() の差？要確認
+    - グローバル変数にしてた i の関数内での初期化忘れだった。。
+    - [TLE](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_4_C/judge/4069161/C++)
   - [ALDS1_4_C](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_4_C/judge/4069162/C++)
