@@ -119,3 +119,9 @@ struct Node {
     - グローバル変数にしてた i の関数内での初期化忘れだった。。
     - [TLE](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_4_C/judge/4069161/C++)
   - [ALDS1_4_C](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_4_C/judge/4069162/C++)
+
+## 再帰と分割統治法
+
+問題を小さく分割（Devide）して、小さい問題を解いて（Solve）、解を結合（Conquer）する方法
+
+
