@@ -59,6 +59,13 @@
 
 [ALDS1_5_B](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_5_B/judge/4091051/C++)
 
+#### パーティション（partition）
+
+与えられた数列の最後の要素を基準値として、配列内の要素を二種類に分割する  
+処理は O(n) だが離れた要素を処理するので、ソート時の利用には注意が必要  
+
+[ALDS1_6_B](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_6_B/judge/4091302/C++)
+
 
 ## データ構造
 
