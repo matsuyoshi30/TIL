@@ -51,6 +51,14 @@
 
 [ALDS1_2_D](http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=4064888)
 
+### 高等的
+
+#### マージソート（merge sort）
+
+高速かつ安定的、だが入力データを保持する領域以外に一時的にメモリが必要
+
+[ALDS1_5_B](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_5_B/judge/4091051/C++)
+
 
 ## データ構造
 
