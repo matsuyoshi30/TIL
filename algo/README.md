@@ -124,4 +124,4 @@ struct Node {
 
 問題を小さく分割（Devide）して、小さい問題を解いて（Solve）、解を結合（Conquer）する方法
 
-
+再帰的な構造を持つ図形（フラクタル）の描画例 [Koch Curve](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_5_C/judge/4084523/C++)
