@@ -66,6 +66,22 @@
 
 [ALDS1_6_B](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_6_B/judge/4091302/C++)
 
+#### クイックソート（quick sort）
+
+上記のパーティションを用いたソート
+
+パーティション->分割した2つの配列に対してクイックソート
+
+ -> それぞれに対してパーティション->クイックソート...
+
+というふうに分割して再帰的に処理する
+
+追加のメモリを必要としないが、離れた要素を交換するので安定ではない
+
+**ソート結果が安定かどうかは、安定的なソートの結果と比較すればよい！**
+
+[ALDS1_6_C](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_6_C/judge/4093246/C++)
+
 
 ## データ構造
 
