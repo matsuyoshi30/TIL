@@ -82,6 +82,12 @@
 
 [ALDS1_6_C](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_6_C/judge/4093246/C++)
 
+#### 計数ソート（counting sort）
+
+累積和を用いて O(n+k) の線形時間で処理される高速なソート
+
+[ALDS1_6_A](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_6_A/judge/4095217/C++)
+
 
 ## データ構造
 
