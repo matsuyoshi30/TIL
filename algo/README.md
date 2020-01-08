@@ -88,6 +88,26 @@
 
 [ALDS1_6_A](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_6_A/judge/4095217/C++)
 
+### STL
+
+#### sort()
+
+```cpp
+vector<int> v;
+sort(v.begin(), v.end());
+
+int l[5];
+sort(l, l+5);
+```
+
+クイックソートがベースとなっており、 O(n logn) で動作する高速なソート
+
+ただし安定ではない
+
+安定なソートを STL を用いてやりたい場合は stable_sort() を利用する
+
+マージソートがベースとなっており、安定で O(n logn) ではあるが、追加領域が必要かつ速度も sort() のほうが速い
+
 
 ## データ構造
 
