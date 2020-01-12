@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <style>
+        .main {
+        position: relative;
+        }
+      </style>
+      <script src="wasm_exec.js"></script>
+      <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+        go.run(result.instance);
+        });
+      </script>
+    </head>
+    <body>
+      <div class="main">
+        <div class="image">
+          <div id="quote">Hi!</div>
+          <img src="./static/icon.jpg" width="200" height="200" alt="matsuyoshi30" title="matsuyoshi30" />
+        </div>
+        <div class="message">
+          <input id="message" type="text" maxlength=255 placeholder="Make the dude talk" autocomplete="off" />
+          <button onClick="sendMessage()">SEND</button>
+        </div>
+      </div>
+    </body>
+</html>
