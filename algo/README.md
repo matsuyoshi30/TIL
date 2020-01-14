@@ -182,3 +182,20 @@ struct Node {
 問題を小さく分割（Devide）して、小さい問題を解いて（Solve）、解を結合（Conquer）する方法
 
 再帰的な構造を持つ図形（フラクタル）の描画例 [Koch Curve](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_5_C/judge/4084523/C++)
+
+
+## 木構造
+
+節点（node）とそれを結ぶ辺（edge）で表現されるデータ構造
+
+### 根付き木
+
+根（root）という、ほかの node とは区別された node を持つ木
+
+木とグラフの違いは root があるか否か
+
+[ALDS1_7_A](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_7_A/judge/4107706/C++)
+
+node の数がもう変化しないことがわかっているので、 left-child right-sibling representation で木構造を表現する
+
+木構造の表現を高変化させることで、多分木を二分木に変換できる！
