@@ -199,3 +199,11 @@ struct Node {
 node の数がもう変化しないことがわかっているので、 left-child right-sibling representation で木構造を表現する
 
 木構造の表現を高変化させることで、多分木を二分木に変換できる！
+
+### 二分木
+
+根付き木よりも最初からシンプルに書ける
+
+深さや高さの計測は再帰的に処理する（高さは左右の子の高さの大きい方）
+
+[ALDS1_7_B](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_7_B/judge/4116025/C++)
