@@ -207,3 +207,14 @@ node の数がもう変化しないことがわかっているので、 left-chi
 深さや高さの計測は再帰的に処理する（高さは左右の子の高さの大きい方）
 
 [ALDS1_7_B](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_7_B/judge/4116025/C++)
+
+### 巡回
+
+木構造のデータを探索するには *再帰* を用いる
+
+一番シンプルな木構造（根、左ノード、右ノードそれぞれひとつずつ）に対してどのように巡回するかを定義した再帰的な関数を作成することで、全体の木構造の根 root を渡せば全体を再帰的に巡回できる
+
+[ALDS1_7_C](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_7_C/judge/4135499/C++)
+
+
+
