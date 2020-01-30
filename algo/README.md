@@ -216,5 +216,27 @@ node の数がもう変化しないことがわかっているので、 left-chi
 
 [ALDS1_7_C](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_7_C/judge/4135499/C++)
 
+先行順巡回：根ノード、左、右の順で巡回  
+中間順巡回：左、根ノード、右の順で巡回  
+後行順巡回：左、右、根ノードの順で巡回  
 
+
+### 二分探索木
+
+二分探索条件を満たす木構造のデータ
+
+節点をポインタで連結させることで木構造を表現する
+
+```
+struct Node {
+    int key;
+    Node *parent, *left, *right;
+};
+```
+
+ポインタで連結させる場合は、`(Node *)malloc(sizeof(Node))`で領域を確保し、アロー演算子`n->key`で値にアクセスして作成する
+
+入力に偏りがない場合は O(logN) の計算量
+
+[挿入](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_8_A/judge/4143653/C++)
 
