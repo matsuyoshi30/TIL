@@ -240,3 +240,13 @@ struct Node {
 
 [挿入](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_8_A/judge/4143653/C++)
 
+[探索](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_8_B/judge/4148908/C++)
+
+[削除](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_8_C/judge/4151126/C++)
+
+削除の場合、削除する節点に子が二つある場合に少し考慮が必要
+
+削除する節点に子がない場合は、そのまま削除してよい  
+削除する節点に子が一つの場合は、削除対象の親、子それぞれのポインタを編集すればよい  
+
+削除する節点に子が二つある場合は、どの要素を削除後の節点の場所に持ってくるかを検討する必要がある
