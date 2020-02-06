@@ -270,3 +270,11 @@ struct Node {
 STL で priority_queue が提供されている  
 要素が int の場合デフォルトでは値が大きいものから優先的に取り出される  
 
+
+## 動的計画法
+
+フィボナッチ数列、普通に実装したら TLE のケースだった  
+
+普通に再帰書くと同じ計算を何度もするはめになってダメなので、既に計算が済んでいるものにについてはそれを使用する  
+
+[ALDS1_10_A](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_10_A/judge/4161388/C++)
