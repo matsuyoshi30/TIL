@@ -278,3 +278,14 @@ STL で priority_queue が提供されている
 普通に再帰書くと同じ計算を何度もするはめになってダメなので、既に計算が済んでいるものにについてはそれを使用する  
 
 [ALDS1_10_A](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_10_A/judge/4161388/C++)
+
+
+最長共通部分列問題
+
+このまえ[ diff ツール](https://github.com/matsuyoshi30/godiff)作ったときに少し勉強した分で対応してみた
+
+二つの文字列を一文字ずつ比較、同じだったらテーブルの左上から +1 、異なっていたらテーブルの上か左の多い方からその値を持ってくるよう、 DP テーブルを作成して、最後にテーブルの末尾？（一番右下）を返せば、それが最長共通部分列の長さとなる
+
+1発AC
+
+[ALDS1_10_C](https://onlinejudge.u-aizu.ac.jp/status/users/matsuyoshi/submissions/1/ALDS1_10_C/judge/4203134/C++)
