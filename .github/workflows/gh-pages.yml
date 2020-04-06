@@ -18,6 +18,7 @@ jobs:
       - name: Run gom2h
         run: |
           GO111MODULE=off GOBIN=$(pwd)/bin go get github.com/matsuyoshi30/gom2h/cmd/gom2h
-          bin/gom2h _md/.
+          cd _md
+          ls | xargs -L 1 ../bin/gom2h
       - name: Build
         run: mv _md/*.html ./docs/
