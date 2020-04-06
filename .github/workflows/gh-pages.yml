@@ -1,0 +1,20 @@
+name: GitHub Pages
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v1
+        with:
+            go-version: '1.14.1'
+      - name: Setup gom2h
+        run: go get -u github.com/matsuyoshi30/gom2h/cmd/gom2h
+      - uses: actions/checkout@master
+      - name: Build
+        run: |
+          gom2h _md/.
+          mv _md/*.html ./docs/
