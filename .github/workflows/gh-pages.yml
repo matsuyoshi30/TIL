@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - "_md/**"
 jobs:
   deploy:
     runs-on: ubuntu-18.04
