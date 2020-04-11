@@ -89,3 +89,35 @@ $ docker run --name wordpress --network wordpress-network -e WORDPRESS_DB_PASSWO
 ```
 
 WordPress の Docker image では、 MySQL への接続先の指定として、`mysql`というホスト名を指定しているので、 MySQL のコンテナ起動時に名前を合わせる
+
+
+### docker-compose
+
+Docker ビルドやコンテナ起動のオプションなどを含め、複数のコンテナの定義をymlファイルに書くこどで、それを利用してDockerビルドやコンテナ起動ができるもの
+
+一つの簡単なコマンドで複数のコンテナを管理できる
+
+```yml
+version: '3'
+services:
+  wordpress:
+    image: wordpress
+    container_name: some-wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_PASSWORD: my-secret-pw
+  mysql:
+    image: mysql:5.7
+    container_name: some-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw「
+```
+
+```
+$ docker-compose build # 自分で Docker image を作成した場合
+
+$ docker-compose up -d # コンテナをバックグラウンド起動
+```

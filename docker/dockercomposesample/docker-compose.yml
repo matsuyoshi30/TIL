@@ -1,0 +1,10 @@
+version: '3'
+services:
+  tomcat:
+    build: ./tomcat
+    image: tomcat-image
+    container_name: tomcat1
+    ports:
+      - 8081:8080
+    volumes:
+      - ./tomcat/share/logs:/share/logs
