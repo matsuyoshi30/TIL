@@ -1,4 +1,4 @@
-# Log forcompetitive programming
+# Log for competitive programming
 
 ### 20200402
 
