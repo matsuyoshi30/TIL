@@ -1,5 +1,22 @@
 # Log for competitive programming
 
+### 20200415
+
+[task](https://atcoder.jp/contests/abc142/tasks/abc142_c)
+
+「生徒の出席番号、その生徒が何番目に出席したか」を pair として vector に詰めて、何番目に出席したかでソートすればOK
+
+pair のソートは以下の通り
+
+```cpp
+// pair<int, int> a
+bool cmp(pair<int, int> a, pair<int, int> b) {
+    return a.second < b.second;
+}
+
+sort(a.begin(), a.end(), cmp);
+```
+
 ### 20200402
 
 [task](https://atcoder.jp/contests/cf16-final/tasks/codefestival_2016_final_b)
