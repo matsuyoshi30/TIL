@@ -1,4 +1,11 @@
-# Log for competitive programming
+
+### 20200418
+
+[task](https://atcoder.jp/contests/abc149/tasks/abc149_c)
+
+解答範囲内の素数を全列挙して vector に詰めてそれと入力値を比較するという面倒なやり方していた
+
+入力値からやればいい単純に。
 
 ### 20200415
 
