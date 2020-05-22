@@ -1,0 +1,3 @@
+[submodule "golang/echo/echo-sample"]
+	path = golang/echo/echo-sample
+	url = https://github.com/matsuyoshi30/echo-sample
