@@ -19,9 +19,9 @@ jobs:
             fetch-depth: 1
       - name: Install gournal
         run: |
-          go get github.com/matsuyoshi30/gournal
+          GOBIN=$(pwd)/bin go get github.com/matsuyoshi30/gournal
           cd shuho
-          gournal pub
+          ../bin/gournal pub
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
