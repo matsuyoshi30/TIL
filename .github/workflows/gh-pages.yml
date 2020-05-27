@@ -4,7 +4,7 @@ on:
     branches:
       - master
     paths:
-      - "_md/**"
+      - "shuho/**"
 jobs:
   deploy:
     runs-on: ubuntu-18.04
@@ -17,18 +17,14 @@ jobs:
         uses: actions/checkout@master
         with:
             fetch-depth: 1
-      - name: Run gom2h
+      - name: Install gournal
         run: |
-          GO111MODULE=off GOBIN=$(pwd)/bin go get github.com/matsuyoshi30/gom2h/cmd/gom2h
-          cd _md
-          ls | xargs -L 1 ../bin/gom2h
-      - name: Build
-        run: |
-          mkdir public
-          mv _md/*.html ./public/
+          go get github.com/matsuyoshi30/gournal
+          cd shuho
+          gournal pub
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: shuho/public
           cname: til.matsuyoshi30.net
