@@ -12,6 +12,9 @@
         margin: 0 auto;
         padding: 45px;
       }
+      .footer {
+        text-align: center;
+      }
       @media (max-width: 767px) {
         .markdown-body {
           padding: 15px;
@@ -19,10 +22,10 @@
       }
       @media (prefers-color-scheme: dark) {
         body {
-          background-color: #24292e;
+          background-color: #1b262c;
         }
         .markdown-body img {
-          background-color: #24292e;
+          background-color: #1b262c;
         }
         .markdown-body {
           color: #e0e0e0;
@@ -46,6 +49,14 @@
         <li><a href="{{ $p.Link }}">Week {{ $p.WeekNum }}</a> <small>{{ $p.FromDate }} - {{ $p.ToDate }}</small></li>
       </ul>
       {{ end }}
+      <div class="footer">
+        <p class="links">
+          <a href="https://github.com/matsuyoshi30">GitHub</a> | <a href="https://github.com/matsuyoshi30/til/tree/master/shuho">Source</a>
+        </p>
+        <p class="copyright">
+          <a href="https://matsuyoshi30.net">matsuyoshi30</a>&nbsp;&copy;&nbsp;2020
+        </p>
+      </div>
     </article>
   </body>
 </html>
