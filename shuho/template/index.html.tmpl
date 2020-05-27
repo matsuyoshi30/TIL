@@ -40,7 +40,12 @@
   <body>
     <article class="markdown-body">
       <h1>{{ .Name }}</h1>
-      {{ range .Posts }}<a href="{{ .Link }}"><p>{{ .Title }}</p></a>{{ end }}
+      {{ range $i, $p := .Posts }}
+      {{ if or ( eq $i 0 ) ( $p.LastWeek ) }}<h2>{{ $p.PostYear }}</h2>{{ end }}
+      <ul>
+        <li><a href="{{ $p.Link }}">Week {{ $p.WeekNum }}</a> <small>{{ $p.FromDate }} - {{ $p.ToDate }}</small></li>
+      </ul>
+      {{ end }}
     </article>
   </body>
 </html>
