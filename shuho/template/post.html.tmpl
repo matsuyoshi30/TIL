@@ -11,11 +11,17 @@
   </head>
   <body>
     <article class="markdown-body">
+      <p><a href="..">Back</a></p>
       <h1>Week {{ .WeekNum }} - {{ .PostYear }}</h1>
       {{ if ne .FromDate "" }}
         The weekly report from {{ .FromDate }} to {{ .ToDate }}
       {{ end }}
       {{ .Body }}
+      <div class="footer" style="text-align:center; padding-top:30px;">
+        <p class="links">
+          <a href="https://github.com/matsuyoshi30/til/tree/master/shuho">Source</a>
+        </p>
+      </div>
     </article>
   </body>
 </html>

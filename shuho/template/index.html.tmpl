@@ -9,12 +9,19 @@
   <body>
     <article class="markdown-body">
       <h1>{{ .Name }}</h1>
+      <p>{{ .Description }}</p>
+      <p>If you want to comment on posts, please let <a href="https://twitter.com/matsuyoshi30">me</a> know!</p>
       {{ range $i, $p := .Posts }}
       {{ if or ( eq $i 0 ) ( $p.IsLastWeek ) }}<h2>{{ $p.PostYear }}</h2>{{ end }}
       <ul>
         <li><a href="{{ $p.Link }}">Week {{ $p.WeekNum }}</a> <small>{{ $p.FromDate }} - {{ $p.ToDate }}</small></li>
       </ul>
       {{ end }}
+      <div class="footer" style="text-align:center; padding-top:30px;">
+        <p class="links">
+          <a href="https://github.com/matsuyoshi30/til/tree/master/shuho">Source</a>
+        </p>
+      </div>
     </article>
   </body>
 </html>
