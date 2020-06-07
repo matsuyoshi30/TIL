@@ -136,3 +136,37 @@ fn b(x: i32) -> i32 {
     x + 1 // 関数ブロック内の最後の式（;無し）を戻り値として返す
 }
 ```
+
+式と文の見分け方＝終端に`;`があるかないか（あったら文）
+
+
+#### フロー制御
+
+`if`は式なので以下のような書き方ができる
+
+```rust
+let number = if condition {
+    5
+} else {
+    6
+};
+```
+
+当然 if-else 節内でデータ型が違えばコンパイルエラー
+
+ループは`loop`, `while`, `for`の3つ。最も使われるのは`for`
+
+```rust
+let a = [10, 20, 30];
+for element in a.iter() {
+    // do something
+}
+```
+
+Range型を使うと以下のようにかける
+
+```rust
+for number in (1..4) {
+    // do something from 1 to 3
+}
+```
