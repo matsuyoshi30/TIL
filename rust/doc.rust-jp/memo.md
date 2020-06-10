@@ -221,3 +221,120 @@ println!("s1 = {}, s2 = {}", s1, s2);
 - 文字型`char`
 - タプル(Copyの型のみを含む場合)
 
+
+#### 参照と借用
+
+所有権を取得して戻す一連の流れをすべての関数で実現するのはめんどくさい
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+
+    let (s2, len) = calculate_length(s1);
+
+    //'{}'の長さは、{}です
+    println!("The length of '{}' is {}.", s2, len);
+}
+
+fn calculate_length(s: String) -> (String, usize) {
+    let length = s.len(); // len()メソッドは、Stringの長さを返します
+
+    (s, length)
+}
+```
+
+上記のように、`calculate_length()`のあとでも`s1`と同じデータの`s2`を返すよう戻り値をタプルにすることで実現できるが、やりたいことに比べて大げさ
+
+その場合は「参照」を使う
+
+```rust
+fn main() {
+    let s1 = String::from("hello");
+
+    let len = calculate_length(&s1);
+
+    // '{}'の長さは、{}です
+    println!("The length of '{}' is {}.", s1, len);
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
+} // ここで、sはスコープ外になる。けど、参照しているものの所有権を持っているわけではないので
+  // 何も起こらない
+```
+
+引数が`&String`となっている。このアンパサンドが参照を示し、所有権をもらうことなく値を参照することができる
+
+関数の引数に参照を取ることを借用という。参照は不変であり、借用した値は変えることができない（コンパイルエラー）
+
+```rust
+fn main() {
+    let mut s = String::from("hello");
+
+    change(&mut s);
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
+}
+```
+
+上記のように、引数に`&mut String`という可変な参照を取れば、借用した値を変更することができる
+
+制約：特定のスコープで、ある特定のデータに対しては、一つしか可変な参照を持てない
+
+複数の不変参照は可能だが、不変参照されている値を可変参照することはできない（不変参照しているということは、参照している値が不変であることを期待している）
+
+ある関数内で生成した値の参照を関数外にわたすようなダングリング参照を防ぐ
+
+
+#### スライス型
+
+```rust
+fn first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
+}
+```
+
+上記のように文字列スライスを返す関数を定義すると、下記のような使用方法ではコンパイルエラーになる
+
+
+```rust
+fn main() {
+    let mut s = String::from("hello world");
+
+    let word = first_word(&s);
+
+    s.clear(); // error!
+}
+```
+
+借用規則より、何らかの不変な参照があるときには可変の参照を得ることができない！
+
+文字列リテラルはスライスなので、`fn first_word(s: &String) -> &str {`は`fn first_word(s: &str) -> &str {`というように書ける
+
+```rust
+fn main() {
+    let my_string = String::from("hello world");
+
+    // first_wordは`String`のスライスに対して機能する
+    let word = first_word(&my_string[..]);
+
+    let my_string_literal = "hello world";
+
+    // first_wordは文字列リテラルのスライスに対して機能する
+    let word = first_word(&my_string_literal[..]);
+
+    // 文字列リテラルは、すでに文字列スライス*な*ので、
+    // スライス記法なしでも機能するのだ！
+    let word = first_word(my_string_literal);
+}
+```
