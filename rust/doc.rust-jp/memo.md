@@ -338,3 +338,86 @@ fn main() {
     let word = first_word(my_string_literal);
 }
 ```
+
+
+### 構造体
+
+構造体定義
+
+```rust
+struct StructName {
+    // [field] name: type,
+    propName1: String,
+    propName2: u64,
+}
+```
+
+インスタンス生成
+
+```rust
+let instance = StructName {
+    propName1: String::from("value"),
+    propName2: 10,
+}
+```
+
+フィールドアクセスは`instance.propName1`でドット記法。インスタンスが可変mutの場合、ドット記法で特定のフィールドに値を代入できる
+
+構造体更新記法を用いて、他のインスタンスから別のインスタンスを生成できる
+
+
+```rust
+let user2 = User {
+    email: String::from("another@example.com"),
+    username: String::from("anotherusername567"),
+    ..user1 // user1 という別のインスタンスのフィールドの値を使用
+};
+```
+
+#### 構造体使用例
+
+```rust
+#[derive(Debug)] // デバッグ情報出力用のアノテーション
+struct Rect {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let rect = Rect { width: 30, height: 50 };
+    println!("rect is {:?}", rect); // 構造体rectにアノテーションを付与しているので使用できる
+
+    println!("The area of the rectangle is {}", area(&rect)); // 借用
+}
+
+fn area(rectangle: &Rectangle) -> u32 {
+    rectangle.width * rectangle.height
+}
+```
+
+#### メソッド
+
+構造体使用例をメソッドを用いて書き直す
+
+```rust
+#[derive(Debug)]
+struct Rect {
+    width: u32,
+    height: u32,
+}
+
+impl Rect {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let rect = Rect { width: 30, height: 50 };
+    println!("rect is {:?}", rect);
+
+    println!("The area of the rectangle is {}", rect.area());
+}
+```
+
+関連関数 = `self`を引数に取らない関数 -> コンストラクタとしてよく使用される（特定の値を引数にとり、それをフィールドの値としてインスタンスを生成する）
