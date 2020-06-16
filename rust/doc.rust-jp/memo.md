@@ -452,3 +452,67 @@ if let Some(3) = x {
     println!("three");
 }
 ```
+
+
+### モジュール
+
+関数や型定義を含む名前空間のこと。それらが外から見えるようにする（public）か否か（private）かを選択できる。
+
+- `mod`で新規モジュールを宣言
+- 標準では非公開で、`pub`キーワードで公開
+- `use`キーワードでモジュールやモジュール内の定義をスコープ内に入れる
+
+
+#### `mod`とファイルシステム
+
+モジュール、サブモジュールを`src/lib.rs`ではない他のファイルで定義するとき、一次階層のモジュールであれば`src/lib.rs`のように`src`配下にモジュール名でファイルを作成すればよい。
+サブモジュールを作って階層関係を用いる場合は、サブモジュールの親モジュール名と同じディレクトリを作成し、親モジュールが定義されているファイルを`mod.rs`とリネームし、サブモジュールを定義しているファイルとまとめて作成したディレクトリに格納する。
+
+これは、コンパイラがモジュール内の階層関係を解決するために必要なこと
+
+#### `pub`で公開するかを制御
+
+- 要素が公開なら、どの親モジュールをとおしてもアクセス可能
+- 要素が非公開なら、直接の親モジュールとその親の子モジュール（兄弟モジュール）のみアクセス可能
+
+#### 異なるモジュールの名前を参照
+
+`use`キーワードでモジュールを指定すれば、使用したい要素のフルパスを書く必要がなくなる
+
+```rust
+pub mod a {
+    pub mod series {
+        pub mod of {
+            pub fn nested_modules() {}
+        }
+    }
+}
+
+use a::series::of;
+
+fn main() {
+    // a::series::of::nested_modules() と書かなくて良い
+    // use a::series::of::nested_modules; とかけば、関数がスコープ内に入るので、
+    // nested_modules(); で使用できる
+    of::nested_modules();
+}
+```
+
+Enum の列挙子をスコープに入れることもできる
+
+```rust
+enum TrafficLight {
+    Red,
+    Yellow,
+    Green,
+}
+
+use TrafficLight::{Red, Yellow};
+// 全部入れたいなら use TrafficLight::*; だが、あまり推奨されない
+
+fn main() {
+    let red = Red; // TrafficLight::Red
+    let yellow = Yellow;
+    let green = TrafficLight::Green;
+}
+```
