@@ -18,7 +18,7 @@ export default {
             count: this.initCount
         }
     },
-    method: {
+    methods: {
         increment() {
             this.count++;
         }
