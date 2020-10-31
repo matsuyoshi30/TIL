@@ -21,7 +21,8 @@ export default {
     methods: {
         increment() {
             this.count++;
-        }
+            this.$emit("emitUp", { name: this.name, counted: this.count })
+       }
     }
 }
 
