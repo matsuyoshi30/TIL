@@ -2,31 +2,32 @@
     <div>
         <Counter name="Counter 1" :initCount="5" @emitUp="getEvent" />
         <Counter name="Counter 2" :initCount="10" @emitUp="getEvent" />
-        <p>{{ primitiveStore.$data.globalCount }}</p>
-        <input type="text" v-model="primitiveStore.$data.globalCount">
+        <p>{{ globalCount }}</p>
         {{ stack }}
     </div>
 </template>
 
 <script>
 import Counter from '@/components/Counter.vue'
-import primitiveStore from '@/primitiveStore.js'
+import { mapState } from "vuex"
 
 export default {
     components: {
         Counter
     },
-    data() {
-        return {
-            stack: [],
-            primitiveStore
+    methods: {
+        getEvent() {
+            this.$store.commit("globalIncrement")
+        },
+        shouldNotThis() { // これはできるけどやっちゃだめ
+            this.$store.state.globalCount++;
         }
     },
-    methods: {
-        getEvent(payload) {
-            this.stack.push(payload);
-            this.primitiveStore.$data.globalCount++;
-        }
+    computed: {
+        count() {
+            return this.$store.state.globalCount
+        },
+        ...mapState(["globalCount"])
     }
 }
 </script>
