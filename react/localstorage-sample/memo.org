@@ -1,0 +1,66 @@
+#+title: memo
+#+author: matsuyoshi30
+
+** 環境構築
+
+   パッケージインストール
+
+   #+BEGIN_SRC
+% npm init -y
+% npm install react react-dom react-scripts
+   #+END_SRC
+
+   /src/index.js 仮作成
+
+   #+BEGIN_SRC
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <p>Hello, world! </p>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('app'))
+   #+END_SRC
+
+   /public/index.html 仮作成
+
+   #+BEGIN_SRC
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>local storage api sample</title>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+   #+END_SRC
+
+   package.json に react-scripts start の scripts 準備して npm start
+
+   なんかブラウザ選べみたいなプロンプトが出るから Y おして続行
+   => package.json に browserslist 項目が追加される
+
+   localhost:3000 でブラウザ遷移して Hello, World が出ればOK
+
+** Form Component を用意
+
+    Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>?
+    => トップレベルにレンダリングする要素は一つのみ
+    => <div>でくくろう
+
+    submit してもリスト表示されない（リストに追加されていない）
+    => state への反映は constructor の外では this.setState をつかう
+    => this.setState({list: this.state.list.concat(this.state.value)}) になる
+
+** localStorage 使う
+
+   localStorage のすべての要素を取得したい
+   => for (let key in localStorage) { if (localStorage.hasOwnProperty(key)) {/* something */}}
