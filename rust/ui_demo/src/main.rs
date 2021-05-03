@@ -4,6 +4,7 @@ use iced::{
 };
 
 struct GUI {
+    tick_state: TickState,
     start_stop_button_state: button::State,
     reset_button_state: button::State,
 }
@@ -13,14 +14,27 @@ const FONT: Font = Font::External {
     bytes: include_bytes!("../rsc/PixelMplus12-Regular.ttf"),
 };
 
+#[derive(Debug, Clone)]
+pub enum Message {
+    Start,
+    Stop,
+    Reset,
+}
+
+pub enum TickState {
+    Stopped,
+    Ticking,
+}
+
 impl Application for GUI {
     type Executor = executor::Null;
-    type Message = ();
+    type Message = Message;
     type Flags = ();
 
     fn new(_flags: ()) -> (GUI, Command<Self::Message>) {
         (
             GUI {
+                tick_state: TickState::Stopped,
                 start_stop_button_state: button::State::new(),
                 reset_button_state: button::State::new(),
             },
