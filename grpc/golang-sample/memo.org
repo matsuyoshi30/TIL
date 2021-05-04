@@ -1,0 +1,10 @@
+#+title: grpc golang sample memo
+#+author: matsuyoshi30
+
+gRPC と Protocol Buffers を用いた RPC の一つ
+
+** Protocol Buffers
+
+   特定のプラットフォームや言語に依存しない、データのシリアライゼーション方法を定めた形式
+   XML より見やすくて軽量で、定義した proto ファイルをもとにいろんな言語でコード生成できる
+   仕様：https://developers.google.com/protocol-buffers/docs/overview
