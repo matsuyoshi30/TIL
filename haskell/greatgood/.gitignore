@@ -1,3 +1,6 @@
-main*
-main.hi
-main.o
+main
+ch08
+color
+reverse
+*.hi
+*.o
