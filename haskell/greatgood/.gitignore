@@ -1,6 +1,5 @@
-main
-ch08
-color
-reverse
+*
+!*.*
 *.hi
 *.o
+.stack-work
