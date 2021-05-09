@@ -300,3 +300,110 @@ Haskell メモ
     Haskell のデータ構造だと、人間の解法をどう表現できるかを考える。データ構造を Haskell で操作して解を得る方法を考える
 
     関数の実装の前に肩宣言がどうなるかを考える
+
+*** ch11: ファンクタ−からアプリカティブファンクタ−へ
+
+    IOもファンクターの一種。何らかの関数に渡すためにIOアクションの結果を名前に束縛しているケースでは fmap が使えるかどうか検討してみても良い。例えば
+
+    #+begin_src
+    main = do line <- getLine
+             let line' = reverse line
+             putStrLn $ "You said, " ++ line' ++ " backwards!"
+    #+end_src
+
+    これはこのように書ける
+
+    #+begin_src
+    main = do line <- fmap reverse getLine
+             putStrLn $ "You said, " ++ line ++ " backwards!"
+    #+end_src
+
+    ファンクターの中身を複数の関数を用いて写したい（fmapに複数の関数を渡したい）ときは関数合成がよい
+
+    関数の型表現に使う -> もファンクター。 r -> a は (->) r a と書ける。このときファンクターのインスタンス宣言は fmap f g -> (\x -> f (g x)) と定義されている
+
+    上記は fmap :: (a -> b) -> (r -> a) -> (r -> b) 。これが意味するのは、 a から b への関数と r から a への関数を受け取って r から b への関数を返す、ということ。そしてこれは関数合成そのものである。r -> a の出力を a -> b の入力につなぎ、関数 r ->b を作る
+
+    fmap :: (a -> b) -> f a -> f b をカリー化の観点からみる。関数とファンクター値を取ってファンクター値を返す2引数関数とも思える一方、関数を取って「元の関数に似ているけどファンクター値を取ってファンクター値を返す関数」を返す関数だと思うこともできる。 (a -> b) -> ( (f a) -> (f b) ) みたいな感じ。 fmap は関数 a -> b を受け取って関数 f a -> f b を返す。これを関数の持ち上げ（lifting）という（値から値への関数から、ファンクター値からファンクター値への持ち上げ）
+
+**** ファンクターが従うべき法則、ファンクタ−則
+
+     id でファンクターを写した場合、ファンクター値が変化してはいけない。fmap id をファンクター値に適用した場合、それは id をファンクター値に適用したのとおなじになる（id は引数をそのまま返す恒等写像関数）
+
+     「fとgの合成関数でファンクター値を写したもの」と、「まずg、次にfでファンクター値を写したもの」が等しいこと。fmap (f . g) = fmap f . fmap g であること。
+
+     Haskell では、ファンクターのインスタンスだと明示的に宣言してても上記のファンクター則にのっとっていない場合はファンクターにならない。処理系でチェックしてないので自分でテスト・証明する必要がある。ある型をファンクターのインスタンスにしようと思ったら、まずは上記のファンクター則が満たせるかどうかを検討する。
+
+**** アプリカティブファンクター
+
+     多引数関数でファンクター値を移すと、関数が入ったファンクター値が返ってくる。例えば、中置関数として2引数と受け取る * を例にすると、 fmap (*) (Just 3) は Just (3 *) となり、関数がファンクター値の中に入る。
+
+     関数が入ったファンクター値と、関数が入っていないファンクター値をやりとりするにはファンクターの機能だけではできない。ここでファンクターの派生であるアプリカティブファンクターを使う
+
+     #+begin_src
+     class (Fucntor f) => Applicative f when
+       pure :: a -> f a
+       <*> :: f (a -> b) -> f a -> f b
+     #+end_src
+
+     まず、型クラス定義からアプリカティブはファンクターの型クラス制約を受けていることがわかる。つまり任意の型をアプリカティブにしたいならまずはファンクターにしないといけない。
+
+     pure は任意の型の引数をとり、それをアプリカティブ値の中に入れて返す。<*> は fmap の強化版で、 fmap が (a -> b) -> f a -> f b 、普通の関数とファンクター値を受け取ってファンクター値を返すのに対し、 <*> は f (a -> b) -> f a -> f b 、関数が入っているファンクター値とファンクター値を受け取ってファンクター値を返す
+
+     Maybe の例
+
+     #+begin_src
+     instance Applicative Maybe where
+       pure = Just
+       Nothing <*> _ = Nothing
+       (Just f) <*> something = fmap f something
+     #+end_src
+
+     pure は Just をラップ。<*> は左辺が Nothing なら Nothing で、左辺に関数が入っているJust（ファンクター）をとったら右辺の内容にその関数を fmap で適用させる。これで Just (3*) <*> Just (4) みたいな処理ができる
+
+     <*> は例によって部分適用がきくので、例えば pure (*) <*> Just 3 <*> Just 5 みたいに <*> を連続して記述することができる
+
+     pure f <*> x <*> y <*> ... は fmap f <*> x <*> y <*> ... と同じ。これは <$> によって f <$> x <*> y <*> ... と書ける
+
+     リストもアプリカティブ
+
+     #+begin_src
+     Prelude> [(*0),(+100),(^2)] <*> [1,2,3]
+     [0,0,0,101,102,103,1,4,9]
+     Prelude> [(+),(*)] <*> [1,2] <*> [3,4]
+     [4,5,5,6,3,4,6,8]
+     Prelude> (++) <$> ["ha","he","hmm"] <*> ["?","!","."]
+     ["ha?","ha!","ha.","he?","he!","he.","hmm?","hmm!","hmm."]
+     #+end_src
+
+     リストでは直積のような形になるが、1つ目の要素は1つ目の関数、2つ目の要素は2つ目の関数、といった形にしたいときは ZipList を使う
+
+     #+begin_src
+     instance Applicative ZipList where
+       pure x = ZipList (repeat x)
+       ZipList fs <*> ZipList xs = ZipList (zipWith (\f x -> f x) fs xs)
+     #+end_src
+
+     こんなかんじ（ShowインスタンスがないのでgetZipList を使う＆Control.Applicativeをインポートする）
+
+     #+begin_src
+     Prelude Control.Applicative> getZipList $ (*) <$> ZipList [1,2,3] <*> ZipList [100,100,100]
+     [100,200,300]
+     Prelude Control.Applicative> getZipList $ (+) <$> ZipList [1,2,3] <*> ZipList [100,100,100]
+     [101,102,103]
+     Prelude Control.Applicative> getZipList $ (max) <$> ZipList [1,2,3,4,5,6] <*> ZipList [5,3,1,2]
+     [5,3,3,4]
+     Prelude Control.Applicative> getZipList $ (,,) <$> ZipList "dog" <*> ZipList "cat" <*> ZipList "rat"
+     [('d','c','r'),('o','a','a'),('g','t','t')]
+     #+end_src
+
+     ファンクターのようにアプリカティブにも従うべき法則がある
+     - pure f <*> x = fmap f x
+     - pure id <*> v = v
+     - pure (.) <*> u <*> v <*> w = u <*> (v <*> w)
+     - pure f <*> pure x = pure (f x)
+     - u <*> pure y = pure ($ y) <*> u
+
+     liftA2 という関数（Control.Applicative）で、1つの関数を2つのアプリカティブ値に適用できる
+
+     アプリカティブファンクターをうまく使うことで、IOのように実行しないと結果が取り出せない処理や、リストを扱うときの非決定性計算、失敗するかもしれない計算をうまく組み合わせることができる
