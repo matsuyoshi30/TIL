@@ -407,3 +407,76 @@ Haskell メモ
      liftA2 という関数（Control.Applicative）で、1つの関数を2つのアプリカティブ値に適用できる
 
      アプリカティブファンクターをうまく使うことで、IOのように実行しないと結果が取り出せない処理や、リストを扱うときの非決定性計算、失敗するかもしれない計算をうまく組み合わせることができる
+
+*** ch12: monoid
+
+    ZipList a 型のデータ宣言は以下のように書ける
+
+    #+begin_src
+    data ZipList a = ZipList [a]
+    -- もしくは
+    data ZipList a = ZipList { getZipList :: [a] }
+    #+end_src
+
+    上の例ではdataキーワードを、既存の型を別の型でくるむために使っている。前の章では instance を使って ZipList をアプリカティブファンクターのインスタンスにしている様子を見た（既存の型をある型クラスのインスタンスにするのは deriving か instance を使う）
+
+    newtype キーワードによって、「1つの型を取りそれをなにかに包んで別の型に見せる」ことができる
+
+    #+begin_src
+    newtype ZipList a = ZipList { getZipList :: [a] }
+    #+end_src
+    https://hackage.haskell.org/package/base-4.15.0.0/docs/src/Control-Applicative.html#ZipList
+
+    data の代わりに newtype を使うほうが高速。だが newtype は値コンストラクタを一つしか持てない、かつその値コンストラクタが持てるフィールドは1つのみ。
+
+    dataキーワードで定義した型とnewtypeキーワードで定義した型はプログラマの視点からはそっくりに見えるかもしれない（どちらにも値コンストラクタとフィールドがある）が、実際には2つの異なったメカニズム
+
+    dataはオリジナルな型を無から作り出すものに対し、newtypeは既存の型をもとに、はっきり区別される新しい型を作るもの。dataに対するパターンマッチが箱から中身を取り出す操作なのに対し、newtypeに対するパターンマッチは、ある型を別の型へ直接変換する操作
+
+    整理すると、
+    - type は型シノニムを作るものtype IntList = [Int]
+      型シグニチャを整理してわかりやすくするために使う
+    - newtype は既存の型を包んで新しい型を作るもの
+      値コンストラクタが一つだけ、持てるフィールドも一つだけの data とみなせる
+    - data は自作の新しい方を作るもの
+
+**** Monoid クラス
+
+     #+begin_src
+     class Monoid m where
+       mempty :: m
+       mapped :: m -> m -> m
+       mconcat :: [m] -> m
+       mconcat = foldr mapped mempty
+     #+end_src
+
+     結合的な二項演算子（2引数関数）と、その演算に関する単位元からなる構造。結合的とは、複数の引数と受け取って値の間の関数適用順序を変えても結果が変わらないということ。（リストの ++ とか、算術の * とか）。単位元とは、それと他の引数を演算に適用させたとき、結果は他の引数と同じになるもの。（リスト結合の [] とか、乗算の1とか）
+
+     Monoid則（Haskell側ではチェックしてくれないので自分で気をつける）
+     - mempty `mappend` x = x
+     - x ` mappend` mempty = x
+     - (x `mappend` y) `mappend` z = x `mappend` (y `mappend` z)
+
+     ある型に対して同じ型クラスのインスタンスを複数定義したかったら、newtypeに包んで新しい型をインスタンスにするという方法がある
+
+     #+begin_src
+     newtype Product a = Product { getProduct :: a } deriving (Eq, Ord, Read, Show, Rounded)
+     instance Num a => Monoid (Product a) where
+       mempty = Product 1
+       Product x `mappend` Product y = Product (x * y)
+     #+end_src
+     https://hackage.haskell.org/package/base-4.12.0.0/docs/src/Data.Semigroup.Internal.html#line-269
+
+     Sum も近くに定義されてる
+
+     Any は || をモノイド演算、Falseを単位元としたモノイドのインスタンス
+     All は && をモノイド演算、Trueを単位元としたモノイドのインスタンス
+
+     Maybe a をモノイドにする方法も複数ある。まずは a がモノイドである型クラス制約付きでMaybe aをモノイドのインスタンスにするケース。単位元が Nothing で mappend の引数のいずれかが Nothing ならそうでない引数を返し、 mappend の引数がいずれも Just なら Just (a `mappend` b) を返す（a がモノイドであることが型クラス制約で決まっているので）
+
+     または、mappend の第一引数を返して第二引数は無視するという First a 。逆に第一引数を無視して第二引数を返す Last a もある
+     https://hackage.haskell.org/package/base-4.12.0.0/docs/src/Data.Monoid.html#line-126
+
+**** Monoid で畳み込み
+
+     畳み込みできるデータ構造：Foldable
