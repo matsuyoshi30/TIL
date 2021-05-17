@@ -527,3 +527,65 @@ Haskell メモ
        m >>= return はただの m であるということ（モナドはモナドで return）
      - 結合法則
        >>= でもなど適用関数を連鎖的に処理するとき、適用する順番はなんでもよいということ
+
+*** ch14: a few Monad
+
+    Writer モナド。普通の値にMonoidのおまけがついたもの
+
+    計算途中の結果をログのように追加していき、最後にログ全体を返す事ができる。値とログのペアがモナド値で、普通の値を受け取って値とログのペア（モナド）を返す関数を適用させると、すでに持っていたログの情報を失わずログを追加していく
+
+    #+begin_src
+    newtype Writer w a = Writer { runWriter :: (a, w) }
+
+    instance (Monoid w) => Monad (Writer w) where
+      return x = Writer (x, mempty)
+      (Writer (x, v)) >>= f = let (Writer (y, v')) = f x in Writer (y, v `mappend` v')
+    #+end_src
+    https://hackage.haskell.org/package/mtl-2.2.1/docs/src/Control.Monad.Writer.Class.html
+
+    モノイド値を結合するとき、非効率なリストには注意する。 ++ は右結合であればよいが左結合では効率が落ちる
+
+    モナドとしての関数
+
+    #+begin_src
+    instance Monad ((->) r) where
+      return x = _ -> x
+      h >>= f = \w -> f (h w) w
+    #+end_src
+    https://hackage.haskell.org/package/base-4.12.0.0/docs/src/GHC.Base.html#line-828
+
+    状態を扱う State モナド（乱数ジェネレータの例のような、値と新しい状態を生成する関数のペア）
+
+    #+begin_src
+    newtype State s a = State { runState :: s -> (a, s) }
+    #+end_src
+
+    MonadState 型クラスでは、現在の状態を取得する get と、状態を引数にとって「現在の状態を受け取った状態で上書きする」関数 put を提供している
+
+    詳細なエラー情報を持つには Either e a をつかう。Left がエラー、Right が実際の値
+
+    #+begin_src
+    instance (Error e) => Monad (Either e) where
+      return x = Right x -- 成功
+      Right >>= f = Right f x
+      Left err >>= f = Left err -- 失敗なので関数を適用としてももともと保持していたエラー値を返す
+      fail msg = Left (strMsg msg)
+    #+end_src
+
+**** モナディック関数
+
+     モナド値を操作したりモナド値を返したり、そのどっちもやったりする関数
+
+     liftM で関数とモナド値をとり、関数によってモナド値を写す。つまり fmap 。liftM :: (Monad m) => (a -> b) -> m a -> m b
+
+     モナドであればアプリカティブだしファンクター。モナドの型クラス制約をつけてから、 pure は return で <*> は ap 、とすることでアプリカティブに、また liftM は fmap 、とすることでファンクターになる
+
+     入れ子になったモナド値（Just (Just 3) みたいなやつ）は join で平らにならすことができる。 join :: (Monad m) => m (m a) -> m a
+
+     m >>= f は join (fmap f m) と同じ
+
+     filter のモナド値扱える版、 filterM :: (Monad m) => (a -> m Bool) -> [a] -> m [a]
+
+     fold のモナド版、 foldM
+
+     <=< を使ってもナディック関数を合成
